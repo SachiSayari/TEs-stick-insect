@@ -1,7 +1,7 @@
 # TEs-stick-insect
 Work with NGS raw reads, dnaPipeTE
 
-# SPECIES
+# DATA FRAME
 _Bacillus_ _spp._
 
 
