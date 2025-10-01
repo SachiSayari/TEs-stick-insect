@@ -22,7 +22,7 @@ Example of used command:
 ```
 while read -r acc; do prefetch "$acc" -O /DATABIG/sara.sebestova/SRAs/B_atticus/; done < atticus_acc.tsv
 ```
-Then we used **fasterq-dump** in a loop to extract fastq files for every folder separately. All fastq files are in separated folders fastq_at, fastq_gr, fastq_ros.
+Then we used **fasterq-dump** in a loop to extract fastq files for every folder separately. All fastq files are in separated folders `fastq_at, fastq_gr, fastq_ros`.
 Example of used command: 
 ```
 for acc in ./*/*.sra; do fasterq-dump $acc; done
