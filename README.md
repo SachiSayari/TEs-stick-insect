@@ -17,7 +17,7 @@ RNA-seq reads accession numbers: SRX7034623 to SRX7034670 (Bioproject: PRJNA5788
 Assembled transcriptomes accession numbers GJDY01000000, GJDZ01000000, GJEA00000000    
 
 # USED COMMANDS
-First, we used **prefetch** in a loop to download SRA data for every species into a separate folder. Folders B_atticus, B_rossius, B_grandii with accession no's in ```.tsv```.
+First, we used **prefetch** in a loop to download SRA data for every species into a separate folder. Folders `B_atticus, B_rossius, B_grandii` with accession no's in ```.tsv```.
 Example of used command:
 ```
 while read -r acc; do prefetch "$acc" -O /DATABIG/sara.sebestova/SRAs/B_atticus/; done < atticus_acc.tsv
