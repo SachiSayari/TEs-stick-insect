@@ -4,13 +4,13 @@ Work with NGS raw reads, dnaPipeTE
 # SPECIES
 _Bacillus_ _spp._
 
-```
+
 |SPECIES	  |TAX. ID	|REPRODUCTION
 | -------- | ------- | --------- |
-|B. grandii	|55088		|facultative p.
-|B. rossius	|75184		|obligate b.
-|B. atticus	|36825		|obligate p.
-```
+|B. grandii	|55088		|facultative p. |
+|B. rossius	|75184		|obligate b. |
+|B. atticus	|36825		|obligate p. |
+
 
 # DATA
 RNA-seq reads accession numbers: SRX7034623 to SRX7034670 (Bioproject: PRJNA578804)
