@@ -7,9 +7,9 @@ _Bacillus_ _spp._
 
 |SPECIES	  |TAX. ID	|REPRODUCTION
 | -------- | ------- | --------- |
-|B. grandii	|55088		|facultative p. |
-|B. rossius	|75184		|obligate b. |
-|B. atticus	|36825		|obligate p. |
+|*B. grandii*	|55088		|facultative p. |
+|*B. rossius*	|75184		|obligate b. |
+|*B. atticus*	|36825		|obligate p. |
 
 
 # DATA
