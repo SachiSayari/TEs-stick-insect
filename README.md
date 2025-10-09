@@ -34,4 +34,4 @@ BuildDatabase -name Bacillus_r_db GCF_032445375.1_Brsri_v3_genomic.fna && Repeat
 ```
 All `SRR` folders were put in `SRR_folders` for every species, so it is less chaotic.
 
-Before actually running dnaPipeTE, we also need to exclude mtDNA reads, because it could possibly provide fake positives if not cleaned. In `B_rossius` and `B_atticus` folder, we downloaded mitochondrion, partial genome (as for B. grandii, there is none on NCBI), named `B_ros_mt.fna` and `B_at_mt.fna`.
+Before actually running dnaPipeTE, we also need to **exclude mtDNA reads**, because it could possibly provide fake positives if not cleaned. In `B_rossius` and `B_atticus` folder, we downloaded mitochondrion, partial genome (as for *B. grandii*, there is none on NCBI), named `B_ros_mt.fna` and `B_at_mt.fna`.
