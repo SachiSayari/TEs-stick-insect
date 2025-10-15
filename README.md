@@ -35,6 +35,7 @@ BuildDatabase -name Bacillus_r_db GCF_032445375.1_Brsri_v3_genomic.fna && Repeat
 All `SRR` folders were put in `SRR_folders` for every species, so it is less chaotic.
 
 Before actually running dnaPipeTE, we also needed to **exclude mtDNA reads**, because it could possibly provide fake positives if not cleaned. In species folders, we downloaded mitochondrion, partial genome, named `B_ros_mt.fna`, `B_at_mt.fna`, `B_gr_mt.fa`.
+
 We needed to index downloaded mtDNA genomes using `bwa index` and align the reads using `bwa mem` resulting in `sam` files with alignments (unmapped and mapped reads). Next it was needed to convert these files into `bam` files with only non-mitochondrial reads using `samtools` and convert them into FASTQ files `.clean.R1.fastq, .clean.R2.fastq` already cleaned files using `bedtools bamtofastq`. Example of used commands in a loop:
 ```
 DATA_DIR="/DATABIG/sara.sebestova/SRAs/B_atticus/fastq_at"
