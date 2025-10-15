@@ -34,4 +34,21 @@ BuildDatabase -name Bacillus_r_db GCF_032445375.1_Brsri_v3_genomic.fna && Repeat
 ```
 All `SRR` folders were put in `SRR_folders` for every species, so it is less chaotic.
 
-Before actually running dnaPipeTE, we also need to **exclude mtDNA reads**, because it could possibly provide fake positives if not cleaned. In `B_rossius` and `B_atticus` folder, we downloaded mitochondrion, partial genome (as for *B. grandii*, there is none on NCBI), named `B_ros_mt.fna` and `B_at_mt.fna`.
+Before actually running dnaPipeTE, we also needed to **exclude mtDNA reads**, because it could possibly provide fake positives if not cleaned. In species folders, we downloaded mitochondrion, partial genome, named `B_ros_mt.fna`, `B_at_mt.fna`, `B_gr_mt.fa`.
+We needed to index downloaded mtDNA genomes using `bwa index` and align the reads using `bwa mem` resulting in `sam` files with alignments (unmapped and mapped reads). Next it was needed to convert these files into `bam` files with only non-mitochondrial reads using `samtools` and convert them into FASTQ files `.clean.R1.fastq, .clean.R2.fastq` already cleaned files using `bedtools bamtofastq`. Example of used commands in a loop:
+```
+DATA_DIR="/DATABIG/sara.sebestova/SRAs/B_atticus/fastq_at"
+OUT_DIR="/DATABIG/sara.sebestova/SRAs/B_atticus/cleaned_fastq"
+
+for R1 in "$DATA_DIR"/*_1.fastq; do
+    SAMPLE=$(basename "$R1" _1.fastq)
+    R2="$DATA_DIR/${SAMPLE}_2.fastq"
+    bwa mem B_at_mt.fna "$R1" "$R2" > "${OUT_DIR}/${SAMPLE}.mt.sam"
+    samtools view -b -f 4 "${OUT_DIR}/${SAMPLE}.mt.sam" | \
+    samtools sort -n -o "${OUT_DIR}/${SAMPLE}.mt.sorted.bam"
+    bedtools bamtofastq -i "${OUT_DIR}/${SAMPLE}.mt.sorted.bam" \
+      -fq "${OUT_DIR}/${SAMPLE}.clean.R1.fastq" \
+      -fq2 "${OUT_DIR}/${SAMPLE}.clean.R2.fastq"
+done
+```
+
