@@ -52,4 +52,9 @@ for R1 in "$DATA_DIR"/*_1.fastq; do
       -fq2 "${OUT_DIR}/${SAMPLE}.clean.R2.fastq"
 done
 ```
-
+We blasted consensus sequences from the repeat library of *B. rossius* against mitochondrial genome of *B. rossius* to detect if any consensus sequences have significant similarity to mtDNA, so we can later filter them out of the repeat library. `consensi.fa` file is located in `/DATABIG/sara.sebestova/SRAs/genome_db/RM_3723322.TueSep301514292025$` and for blasting we used these commands: 
+```
+makeblastdb -in B_ros_mt.fna -dbtype nucl -out mt_db
+blastn -db mt_db -query consensi.fa -evalue 0.05 -outfmt 7 > consensi_vs_mt_blast_05.txt
+```
+Two consensus sequences from the repeat library, have strong hits to the *B. rossius* mt genome (GU001956.1). The first hit is for `rnd-5_family-55` with 95.6 % identity over 1882 bp, the second hit is for `rnd-5_family-1658` with 91.7 % identity over 1295 bp. 
