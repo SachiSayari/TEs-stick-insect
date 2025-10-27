@@ -59,10 +59,56 @@ blastn -db mt_db -query consensi.fa -evalue 0.05 -outfmt 7 > consensi_vs_mt_blas
 ```
 Results of this BLAST is saved in `consensi_vs_mt_blast_05.txt`. Files `mt_db` are database from `B_ros_mt.fna`. Two consensus sequences from the repeat library have strong hits to the *B. rossius* mt genome (GU001956.1). The first hit is for `rnd-5_family-55` with 95.6 % identity over 1882 bp, the second hit is for `rnd-5_family-1658` with 91.7 % identity over 1295 bp. 
 
-In a folder `copy_consensi` we copied all `consensi.fa` files before filtering out consensus sequences with significant hits from the repeat library. 
+In a folder `copy_consensi` we copied all `consensi.fa` files before filtering out consensus sequences with significant hits from the repeat library, just in case we made a mistake and needed to do it again. 
 
-To filter out consensus sequences, we saved relevant information about these hits present in all `consensi.fa` files to `rnd5_1658_family_list.txt` and `rnd5_1658_family_list.txt` files using grep commands: 
+To know, what to use for filtering out consensus sequences, we saved relevant information about these hits present in all `consensi.fa` files to `rnd5_1658_family_list.txt` and `rnd5_1658_family_list.txt` files using grep commands: 
 ```
 grep "^>rnd-5_family-1658" consensi* > rnd5_1658_family_list.txt
 grep -E "^>rnd-5_family-55([^0-9]|$)" consensi.* > rnd5_55_family_list.txt
 ```
+These hits were later filtered out of all `consensi.fa` files using `awk` and saved under names `filtered_consensi_*`:
+```
+awk '
+  /^>rnd-5_family-1658/ || /^>rnd-5_family-55([^0-9]|$)/ {skip=1}
+  /^>/ && !/^>rnd-5_family-1658/ && !/^>rnd-5_family-55([^0-9]|$)/ {skip=0}
+  !skip
+' consensi.fa > filtered_consensi_1658_55.fa
+
+awk '
+  /^>rnd-5_family-55#rRNA/ || /^>rnd-5_family-1658#Unknown/ {skip=1}
+  /^>/ && !/^>rnd-5_family-55#rRNA/ && !/^>rnd-5_family-1658#Unknown/ {skip=0}
+  !skip
+' consensi.fa.classified > filtered_consensi_55_1658.fa.classified
+```
+We are running **dnaPipeTE** on every fastq file of *B. rossius* separately through the Apptainer, using only single-end R1 clean fastq files saved in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq`. To get into the container, we have to first go into folder, where we saved `dnapipete.sif` through which we can acces the Apptainer. We always mount our directories first (directory with our clean raw reads and directory, where the repeat library is located), so we can acces it later in the container. 
+```
+apptainer shell \
+ --bind /DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq:/data/fastq_parent \
+ --bind /DATABIG/sara.sebestova/SRAs/genome_db/RM_3723322.TueSep301514292025:/data/repeat_lib \
+ dnapipete.sif
+```
+Once we mounted it and we got into the container, we can run **dnaPipeTE** inside the container using command with pathway to our repeat library of *B. rossius*:
+````
+python3 /opt/dnaPipeTE/dnaPipeTE.py \
+  -input /data/fastq_parent/SRR10323852.clean.R1.fastq \
+  -output /data/fastq_parent/01_dnapipete_out_SRR10323852 \
+  -cpu 2 \
+  -genome_size 2000000000 \
+  -genome_coverage 0.1 \
+  -species B_rossius \
+  -contig_length 150 \
+  -RM_lib /data/repeat_lib/filtered_consensi_55_1658.fa.classified
+```
+Our results of **dnaPipeTE** are located in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq` in additional folders `SRR103238*_01_dnapipete_out` where * corresponds to the specific SRR number and 01 means used genome coverage (later on, we will also run it again increasing the genome coverage). Once we have results in our `dnapipete_out` folders, we can use **dnaPT_utils** inside the Apptainer to get additional charts.
+```
+apptainer shell --bind /DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq/01_dnapipete_out_SRR10323852:/da
+ta/output:rw dnapipete.sif
+```
+Where `:rw` means, that the folder is writable,
+```
+cd /data/output/
+
+bash /opt/dnaPT_utils/dnaPT_charts.sh -I /data/output
+bash /opt/dnaPT_utils/dnaPT_landscapes.sh -I /data/output
+```
+`dnaPT_charts` created `dnaPipeTE_charts.pdf` and `RPlots.pdf`, `dnaPT_landscapes.sh` created `dnaPipeTE_landscapes_subclass.pdf`, all in `dnapipete_out` folders.
