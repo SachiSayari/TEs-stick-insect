@@ -32,7 +32,7 @@ Used command:
 ```
 BuildDatabase -name Bacillus_r_db GCF_032445375.1_Brsri_v3_genomic.fna && RepeatModeler -database Bacillus_r_db -threads 20 -LTRStruct > Bacillus_repeatmodeler.log
 ```
-All `SRR` folders were put in `SRR_folders` for every species, so it is less chaotic.
+All `SRR` folders with `.sra` files were put in `SRR_folders` for every species, so it is less chaotic.
 
 Before actually running dnaPipeTE, we also needed to **exclude mtDNA reads**, because it could possibly provide fake positives if not cleaned. In species folders, we downloaded mitochondrion, partial genome, named `B_ros_mt.fna`, `B_at_mt.fna`, `B_gr_mt.fa`.
 
