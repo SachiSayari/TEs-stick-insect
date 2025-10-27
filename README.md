@@ -114,4 +114,4 @@ cd /data/output/
 bash /opt/dnaPT_utils/dnaPT_charts.sh -I /data/output
 bash /opt/dnaPT_utils/dnaPT_landscapes.sh -I /data/output
 ````
-`dnaPT_charts` created `dnaPipeTE_charts.pdf` and `RPlots.pdf`, `dnaPT_landscapes.sh` created `dnaPipeTE_landscapes_subclass.pdf`, all in `dnapipete_out` folders.
+Usin dnaPT_utils provided us with `dnaPT_charts`, which created `dnaPipeTE_charts.pdf` and `RPlots.pdf`, and `dnaPT_landscapes.sh`, which created `dnaPipeTE_landscapes_subclass.pdf`, all located in `dnapipete_out` folders.
