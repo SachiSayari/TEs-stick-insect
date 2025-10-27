@@ -80,7 +80,8 @@ awk '
   /^>/ && !/^>rnd-5_family-55#rRNA/ && !/^>rnd-5_family-1658#Unknown/ {skip=0}
   !skip
 ' consensi.fa.classified > filtered_consensi_55_1658.fa.classified
-```
+``
+
 We are running **dnaPipeTE** on every fastq file of *B. rossius* separately through the Apptainer, using only single-end R1 clean fastq files saved in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq`. To get into the container, we have to first go into folder, where we saved `dnapipete.sif` through which we can acces the Apptainer. We always mount our directories first (directory with our clean raw reads and directory, where the repeat library is located), so we can acces it later in the container. 
 
 ```
@@ -91,7 +92,7 @@ apptainer shell \
 ```
 
 Once we mounted it and we got into the container, we can run **dnaPipeTE** inside the container using command with pathway to our repeat library of *B. rossius*:
-````
+
 python3 /opt/dnaPipeTE/dnaPipeTE.py \
   -input /data/fastq_parent/SRR10323852.clean.R1.fastq \
   -output /data/fastq_parent/01_dnapipete_out_SRR10323852 \
@@ -101,13 +102,11 @@ python3 /opt/dnaPipeTE/dnaPipeTE.py \
   -species B_rossius \
   -contig_length 150 \
   -RM_lib /data/repeat_lib/filtered_consensi_55_1658.fa.classified
-```
 
 Our results of **dnaPipeTE** are located in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq` in additional folders `SRR103238*_01_dnapipete_out` where * corresponds to the specific SRR number and 01 means used genome coverage (later on, we will also run it again increasing the genome coverage). Once we have results in our `dnapipete_out` folders, we can use **dnaPT_utils** inside the Apptainer to get additional charts.
-```
+
 apptainer shell --bind /DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq/01_dnapipete_out_SRR10323852:/da
 ta/output:rw dnapipete.sif
-```
 
 Where `:rw` means, that the folder is writable,
 ```
