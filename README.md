@@ -27,7 +27,7 @@ Example of used command:
 ```
 for acc in ./*/*.sra; do fasterq-dump $acc; done
 ```
-Before running dnaPipeTE, we need to build a library (specialized BLAST database from the input genome FASTA file). There is currently only avaliable genome for *Bacillus rossius*.
+Before running dnaPipeTE, we need to build a library (specialized BLAST database from the input genome FASTA file). There is currently only avaliable genome for *Bacillus rossius* **(subspecies &accession number)**.
 Used command:
 ```
 BuildDatabase -name Bacillus_r_db GCF_032445375.1_Brsri_v3_genomic.fna && RepeatModeler -database Bacillus_r_db -threads 20 -LTRStruct > Bacillus_repeatmodeler.log
