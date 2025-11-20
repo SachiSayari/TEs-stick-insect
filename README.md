@@ -59,8 +59,6 @@ blastn -db mt_db -query consensi.fa -evalue 0.05 -outfmt 7 > consensi_vs_mt_blas
 ```
 Results of this BLAST is saved in `consensi_vs_mt_blast_05.txt`. Files `mt_db` are database from `B_ros_mt.fna`. Two consensus sequences from the repeat library have strong hits to the *B. rossius* mt genome (GU001956.1). The first hit is for `rnd-5_family-55` with 95.6 % identity over 1882 bp, the second hit is for `rnd-5_family-1658` with 91.7 % identity over 1295 bp. 
 
-In a folder `copy_consensi` we copied all `consensi.fa` files before filtering out consensus sequences with significant hits from the repeat library, just in case we made a mistake and needed to do it again. 
-
 To know, what to use for filtering out consensus sequences, we saved relevant information about these hits present in all `consensi.fa` files to `rnd5_1658_family_list.txt` and `rnd5_1658_family_list.txt` files using grep commands: 
 ```
 grep "^>rnd-5_family-1658" consensi* > rnd5_1658_family_list.txt
