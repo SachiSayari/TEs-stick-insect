@@ -26,7 +26,7 @@ SAMPLE_NUMBER=2
 RM_T=0.25
 CPU=6
 
-### PRE-FLIGHT CHECKS ###
+### PRE-RUN CHECKS ###
 
 # Check if directories exist
 if [[ ! -d "$CLEANED_FAST_DIR" ]]; then
@@ -74,7 +74,7 @@ run_job() {
         return
     fi
 
-    echo ">>> Gods approved to start a sample: $sample"
+    echo ">>> Starting a sample: $sample"
    
     # Run dnaPipeTE inside the Singularity container
     singularity exec \
@@ -84,9 +84,11 @@ run_job() {
     cd /opt/dnaPipeTE/
 
     # Explicitly use container-bundled Java 8 (required by Trinity)
+    # Without specifying the script will fail on which Java version should be used
     export JAVA_HOME=/opt/dnaPipeTE/bin/OpenJDK-1.8.0.141-x86_64-bin
     export PATH=\$JAVA_HOME/bin:\$PATH
 
+    # Set locale to avoid Python/Perl Unicode warnings 
     export LC_ALL=C.UTF-8
     export LANG=C.UTF-8
 
