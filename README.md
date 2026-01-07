@@ -99,6 +99,6 @@ python3 dnaPipeTE.py \
   -RM_t 0.25 \
   -cpu 2
 ````
-Our results of **dnaPipeTE** are located in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq` in additional folders `SRR103238*_01_dnapipete_out` where * corresponds to the specific SRR number and 01 means used genome coverage (later on, we will also run it again increasing the genome coverage). Once we have results in our `dnapipete_out` folders, we can use **dnaPT_utils** to get additional charts.
+Our results of **dnaPipeTE** are located in `/DATABIG/sara.sebestova/SRAs/B_rossius/cleaned_fastq`.
 
-Usin dnaPT_utils provided us with `dnaPT_charts.sh`, which created `dnaPipeTE_charts.pdf` and `RPlots.pdf`, and `dnaPT_landscapes.sh`, which created `dnaPipeTE_landscapes_subclass.pdf`, all located in `dnapipete_out` folders.
+Using dnaPT_utils provided us with `dnaPT_charts.sh`, which created `dnaPipeTE_charts.pdf` and `RPlots.pdf`, and `dnaPT_landscapes.sh`, which created `dnaPipeTE_landscapes_subclass.pdf`, all located in `dnapipete_out` folders.
